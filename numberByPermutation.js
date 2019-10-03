@@ -10,6 +10,7 @@ function numberByPermutation ( permutation ) {
         }
         return d
     })
+    console.log(d)
     return d.reduce( ( acc, valD, index ) => acc + valD * f[n - 1 - index], 1)
 }
 

@@ -1,27 +1,28 @@
-const size = 4
-let list = new Array( size + 1 ).fill(0)
-let f = []
-function factorial( n ) {
-    if ( n === 1 ) {
-        return f[ n ] = 1
-    }
-    return f[ n ] = n * factorial( n - 1 )
-}
-factorial( size + 1 )
-let rank = 20
-for ( let j = 1; j < size ; j ++ ) {
-    let d = ( rank % f[ j + 1 ] ) / f[ j ]
-    console.log(j,  d, rank, d * f[ j ], f[ j + 1 ], f[ j ])
-    rank = rank - d * f[ j ]
-    list[ size - j ] = d + 1
-    console.log(list)
-    for ( let i = size - j + 1; i < size + 1; i ++ ) {
-        console.log( list, i, size, list[i - 1], d )
-        if (list[ i - 1 ] > d) {
-            list[ i - 1 ] = list[ i - 1 ] + 1
+function permutationByNumber ( size, rank ) {
+    let list = new Array(size).fill(0)
+    let f = [1]
+    for ( let i = 1; i < size + 1; i++ ) f[i] = f[i - 1] * ( i )
+
+    rank = rank - 1
+    for ( let i = 0; i < size; i++) {
+        let d = ( rank % f[i + 1] ) / f[i]
+        rank = rank - d * f[ i ]
+        list[(size - 1) - i] = d + 1
+        for ( let j = size - i; j < size; j ++) {
+            if ( list[ j ] > d ) list[ j ] ++
         }
     }
+    return list
 }
 
-console.log(4132)
-console.log(list)
+function stringPermutationByNumber ( str, rank ) {
+    return permutationByNumber(str.length, rank).map(index => str[ index - 1 ]).join("")
+}
+
+console.log(permutationByNumber(5, 1))
+console.log(permutationByNumber(5, 2))
+console.log(permutationByNumber(5, 3))
+console.log(permutationByNumber(5, 4))
+console.log(permutationByNumber(5, 5))
+console.log(permutationByNumber(5, 6))
+console.log(stringPermutationByNumber("abcde", 6))
